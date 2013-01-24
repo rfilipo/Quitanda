@@ -51,7 +51,10 @@ Quitanda - Catalyst based application
 
     my $store = new Quitanda;
 
-    # is the same as
+    # must setup the store.
+    Quitanda->setup();  # use default values from quitanda.conf
+    
+    # setup with custom values
     Quitanda->setup({
           cesta => new Quitanda::Cesta({}), 
           conta => new Quitanda::Conta({}), 
@@ -65,6 +68,7 @@ Quitanda - Catalyst based application
           db => 'dbi:SQLite:dbname=data/quitanda.db' 
     });
     # all model classes are DBIC or DBIx::Simple
+
     # But we can setup just something
     Quitanda->setup({
       cliente => new Quitanda::Cliente({ id => 1 }) 
@@ -98,9 +102,10 @@ Quitanda - Catalyst based application
            ],
            op => 'out'; 
     });
-    # return all data for client in 2 arrays ref 
-    $id = Quitanda->cliente->id;
-    Quitanda->relatorio({
+
+    # relatorio return data for client as perl structures 
+    my $id = Quitanda->cliente->id;
+    my $rel = Quitanda->relatorio({
         classes => 'Quitanda::Conta', 'Quitanda::Cliente';
         sql => 'select * from cliente, conta where cliente.id = '.$id.'
     });
@@ -108,6 +113,7 @@ Quitanda - Catalyst based application
     $rel = {
         reltype => 'sql';
         result  => {contas=> /@mycontaclasses, clientes=>  /@myclienteclasses};
+        message => "returned 2 arrays: contas / clientes"
     }
 
 
@@ -115,7 +121,7 @@ Quitanda - Catalyst based application
 
 Quitanda implements a ecommerce server. 
 All data is returned as perl hash refs.
-The system uses 
+The system uses a configuration file for db and 
 
 =cut
 
@@ -148,6 +154,9 @@ sub setup {
 
     my $config = new Config::General("quitanda.conf");
     $self->configuration ({$config->getall});
+    $param->{cliente} ? 
+        $self->cliente($param->{cliente}) : 
+	$self->cliente(new Quitanda::Cliente($self->configuration));
     $param->{cesta} ? 
         $self->cesta($param->{cesta}) : 
 	$self->cesta(new Quitanda::Cesta($self->configuration));
@@ -160,9 +169,6 @@ sub setup {
     $param->{stack} ? 
         $self->stack($param->{stack}) : 
 	$self->stack(new Quitanda::Stack($self->configuration));
-    $param->{cliente} ? 
-        $self->cliente($param->{cliente}) : 
-	$self->cliente(new Quitanda::Cliente($self->configuration));
     $param->{endereco} ? 
         $self->endereco($param->{endereco}) : 
 	$self->endereco(new Quitanda::Endereco($self->configuration));

@@ -2,6 +2,7 @@
 
 use Test::More tests => 5;
 use Data::Dumper;
+use lib "lib";
 
 BEGIN {
     use_ok( 'Quitanda' ) || print "Bail out!
@@ -13,9 +14,14 @@ can_ok('Quitanda', 'new','setup','estoque', 'encomenda', 'paga', 'recebe', 'entr
 
 # cria uma nova loja
 my $store = new_ok ('Quitanda');
-#print Dumper $store;
+
+# setup coloca a loja no estado default definido em quitanda.conf
 ok($store->setup, 'Faz o Setup');
+
+print "The new store:\n";
 print Dumper $store;
+
+#is_ok ("");
 
 # Armazena mercadorias
 ok($store->estoque([

@@ -19,7 +19,11 @@ extends("Quitanda::Controller");
 
 sub BUILD {
 	my $self = shift;
-        $self->resultset('Mercadoria');
+    $self->resultset('Mercadoria');
+    
+    my $config = shift;
+    $self->config($config->{mercadoria});
+    
 	return 1;
 }
 

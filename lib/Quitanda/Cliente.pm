@@ -13,18 +13,26 @@ use namespace::autoclean;
 
 extends("Quitanda::Controller");
 
-sub BUILD {
-	my $self = shift;
-        $self->resultset('Cliente');
-	return 1;
-}
-
 
 =head1 CLIENTE
 
-
+Cliente is the Controller for the data model defined in Quitanda::Schema::Result::Cliente; 
 
 =cut
+
+sub BUILD {
+	my $self = shift;
+    $self->resultset('Cliente');
+    my $config = shift;
+    $self->config($config->{client});
+    
+    #use Data::Dumper;
+    #print "My config:\n";
+    #print Dumper $config;
+    
+	return 1;
+}
+
 
 
 =head1 PUBLIC ATTRIBUTES

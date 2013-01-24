@@ -10,7 +10,7 @@ Quitanda::Controller - Abstract Class
 
 =head1 DESCRIPTION
 
-Controlls things in Quitanda
+Controlling things in Quitanda
 
 =cut
 
@@ -20,17 +20,24 @@ use namespace::autoclean;
 
 our $VERSION = '0.01';
 
-=head2 propriedades
+=head2 Atributes
 
     resultset
-
     String com o nome da tabela do DBIC Resultset
+
+    config
+    Perl structure from quitanda.conf
 
 =cut
 
 has 'resultset' => (
     is  => 'rw'
 );
+
+has 'config' => (
+    is  => 'rw'
+);
+
 
 =head3 BUILD
      O construtor
