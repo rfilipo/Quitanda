@@ -26,7 +26,7 @@ print Dumper $store;
 # Armazena mercadorias
 ok($store->estoque([
    {
-      data => 20121010,
+       data => 20121010,
       nome => 'Feijão',
       qt => '60kg',
       preco => 'R$90,00',
