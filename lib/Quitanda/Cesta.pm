@@ -54,7 +54,7 @@ has 'nome' => (
       Quitanda::Mercadoria
 
    Description : 
-      Retorna a mercadoria na sexta pelo id, se existir, senão retorna 0;
+      Retorna a mercadoria na sexta pelo id, se existir, senao retorna 0;
 
 =cut
 

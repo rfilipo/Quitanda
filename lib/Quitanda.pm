@@ -189,7 +189,7 @@ efetua o pagamento no valor para o fornecedor
 $store->estoque([
    {
       data => 20121010,
-      nome => 'Feijão',
+      nome => 'Feijao',
       qt => '60kg',
       preco => 'R$90,00',
       fornecedor => '$id'
