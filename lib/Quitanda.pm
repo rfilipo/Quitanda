@@ -153,7 +153,7 @@ sub setup {
     my $param = shift;
 
     my $config = $self->configuration({ Config::General->new("quitanda.conf")->getall });
-    my @components = qw(cliente cesta conta mercadoria stack endereco fornecedor);
+    my @components = qw(cliente cesta conta mercadoria stack endereco fornecedor promocao);
     foreach my $comp_name (@components) {
         next unless $self->can($comp_name);
 	my $module_name = join '::', 'Quitanda', ucfirst $comp_name;
