@@ -152,32 +152,15 @@ sub setup {
     my $self  = shift;
     my $param = shift;
 
-    my $config = new Config::General("quitanda.conf");
-    $self->configuration ({$config->getall});
-    $param->{cliente} ? 
-        $self->cliente($param->{cliente}) : 
-	$self->cliente(new Quitanda::Cliente($self->configuration));
-    $param->{cesta} ? 
-        $self->cesta($param->{cesta}) : 
-	$self->cesta(new Quitanda::Cesta($self->configuration));
-    $param->{conta} ? 
-        $self->conta($param->{conta}) : 
-	$self->conta(new Quitanda::Conta($self->configuration));
-    $param->{mercadoria} ? 
-        $self->mercadoria($param->{mercadoria}) : 
-        $self->mercadoria( new Quitanda::Mercadoria($self->configuration));
-    $param->{stack} ? 
-        $self->stack($param->{stack}) : 
-	$self->stack(new Quitanda::Stack($self->configuration));
-    $param->{endereco} ? 
-        $self->endereco($param->{endereco}) : 
-	$self->endereco(new Quitanda::Endereco($self->configuration));
-    $param->{fornecedor} ? 
-        $self->fornecedor($param->{fornecedor}) : 
-	$self->fornecedor(new Quitanda::Fornecedor($self->configuration));
-    $param->{promocao} ? 
-        $self->promocao($param->{promocao}) : 
-	$self->promocao(new Quitanda::Promocao($self->configuration));
+    my $config = $self->configuration({ Config::General->new("quitanda.conf")->getall });
+    my @components = qw(cliente cesta conta mercadoria stack endereco fornecedor);
+    foreach my $comp_name (@components) {
+        next unless $self->can($comp_name);
+	my $module_name = join '::', 'Quitanda', ucfirst $comp_name;
+        $self->$comp_name(
+	    $param->{ $comp_name } || $module_name->new($config)
+	);
+    }
     return $self;
 }
 
