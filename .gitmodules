@@ -1,0 +1,3 @@
+[submodule "App-Quitanda"]
+	path = App-Quitanda
+	url = https://github.com/rfilipo/App-Quitanda
