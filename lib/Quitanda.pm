@@ -49,29 +49,29 @@ Quitanda - Catalyst based application
 
     use Quitanda;
 
-    my $store = new Quitanda;
+    my $store = Quitanda->new;
 
     # must setup the store.
     Quitanda->setup();  # use default values from quitanda.conf
     
     # setup with custom values
     Quitanda->setup({
-          cesta => new Quitanda::Cesta({}), 
-          conta => new Quitanda::Conta({}), 
-          entrega => new Quitanda::Entrega({}), 
-          mercadoria => new Quitanda::Mercadoria({}),           
-          stack => new Quitanda::Stack({}), 
-          cliente => new Quitanda::Cliente({}), 
-          endereco => new Quitanda::Endereco({}), 
-          fornecedor => new Quitanda::Fornecedor({})
-          promocao => new Quitanda::Promocao({}), 
-          db => 'dbi:SQLite:dbname=data/quitanda.db' 
+          cesta => Quitanda::Cesta->new({}),
+          conta => Quitanda::Conta->new({}),
+          entrega => Quitanda::Entrega->new({}),
+          mercadoria => Quitanda::Mercadoria->new({}),
+          stack => Quitanda::Stack->new({}),
+          cliente => Quitanda::Cliente->new({}),
+          endereco => Quitanda::Endereco->new({}),
+          fornecedor => Quitanda::Fornecedor->new({}),
+          promocao => Quitanda::Promocao->new({}),
+          db => 'dbi:SQLite:dbname=data/quitanda.db'
     });
     # all model classes are DBIC or DBIx::Simple
 
     # But we can setup just something
     Quitanda->setup({
-      cliente => new Quitanda::Cliente({ id => 1 }) 
+      cliente => Quitanda::Cliente->new({ id => 1 })
     });
 
     # we have some facade to internal classes procedures
